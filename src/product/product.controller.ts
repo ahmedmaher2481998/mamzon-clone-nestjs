@@ -5,6 +5,7 @@ import {
   Get,
   Inject,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -17,7 +18,7 @@ export class ProductController {
 
   @Get()
   getAllProducts() {
-    return this.productService.getAllProducts;
+    return this.productService.getAllProducts();
   }
 
   @Post()

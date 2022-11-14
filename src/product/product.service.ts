@@ -26,8 +26,6 @@ export class ProductService {
   }
 
   async updateProduct(id: string, newProduct: updateProductType) {
-    const product = await this.ProductSchema.findById(id);
-    return product.update(newProduct);
-    // return product.save();
+    return this.ProductSchema.findByIdAndUpdate(id, newProduct, { new: true });
   }
 }
