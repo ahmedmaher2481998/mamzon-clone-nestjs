@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model, Mongoose } from 'mongoose';
+import { Model } from 'mongoose';
 import { ProductType, updateProductType } from './procust.types';
 import { productDocument } from './product.schema';
-
+import crypto from 'node:crypto';
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel('Product')
     private readonly ProductSchema: Model<productDocument>,
   ) {}
-
   createProduct(product: ProductType) {
     return this.ProductSchema.create(product);
   }
