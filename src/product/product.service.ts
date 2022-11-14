@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, Mongoose } from 'mongoose';
-import { ProductType } from './procust.types';
+import { ProductType, updateProductType } from './procust.types';
 import { productDocument } from './product.schema';
 
 @Injectable()
@@ -25,15 +25,9 @@ export class ProductService {
     return this.ProductSchema.deleteOne({ _id: id });
   }
 
-  async updateProduct(
-    id: string,
-    newProduct: { name?: string; description?: string; price?: number },
-  ) {
+  async updateProduct(id: string, newProduct: updateProductType) {
     const product = await this.ProductSchema.findById(id);
-    product.name = newProduct.name ?? product.name;
-    product.price = newProduct.price ?? product.price;
-    product.description = newProduct.description ?? product.description;
-
-    return product.save();
+    return product.update(newProduct);
+    // return product.save();
   }
 }
