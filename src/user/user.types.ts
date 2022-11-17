@@ -1,6 +1,6 @@
 export type userType = {
   name: string;
-  password: string;
+  hashedPassword: string;
   email: string;
 };
 

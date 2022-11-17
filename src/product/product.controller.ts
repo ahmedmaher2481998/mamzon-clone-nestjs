@@ -3,12 +3,12 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { ProductType, updateProductType } from './procust.types';
 import { ProductService } from './product.service';
 
@@ -27,11 +27,13 @@ export class ProductController {
   }
 
   @Get(':id')
+  @UseGuards(JwtGuard)
   getById(@Param('id') id: string) {
     return this.productService.getProductById(id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtGuard)
   updateProduct(
     @Param('id') id: string,
     @Body() newProduct: updateProductType,

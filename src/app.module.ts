@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './user/users.module';
 
 @Module({
   imports: [
