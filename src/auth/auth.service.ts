@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   // verify Jwt
-  async verifyJwt(token: string): Promise<{ exp: string }> {
+  async verifyJwt(token: string): Promise<{ exp: number }> {
     try {
       const { exp } = await this.jwtService.verifyAsync(token);
       return { exp };
