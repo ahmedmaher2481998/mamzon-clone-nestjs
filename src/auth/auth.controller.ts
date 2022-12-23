@@ -12,9 +12,15 @@ export class AuthController {
     return this.authService.register(body);
   }
 
-  @Post('login')
+  @Post('signin')
   @HttpCode(HttpStatus.ACCEPTED)
   logIn(@Body() user: userDto) {
     return this.authService.logIn(user);
+  }
+
+  @Post('verify-jwt')
+  @HttpCode(HttpStatus.OK)
+  verifyJwt(@Body() payload: { token: string }) {
+    return this.authService.verifyJwt(payload.token);
   }
 }

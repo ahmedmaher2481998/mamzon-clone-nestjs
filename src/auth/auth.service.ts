@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { UserService } from 'src/user/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -39,7 +44,9 @@ export class AuthService {
     password: string;
     hashedPassword: string;
   }) {
-    return bcrypt.compareSync(password, hashedPassword);
+    const doesMatch = bcrypt.compareSync(password, hashedPassword);
+    console.log('doesMatch', doesMatch);
+    return doesMatch;
   }
   //   validateUser
   async validateUser(email, password) {
@@ -58,7 +65,18 @@ export class AuthService {
     const user = await this.validateUser(email, password);
     if (!user) throw new ForbiddenException('email or password is wrong');
 
-    const jwt = this.jwtService.signAsync({ user });
-    return { token: jwt };
+    const token = await this.jwtService.signAsync(user);
+    console.log('jwt', token);
+    return { token };
+  }
+
+  // verify Jwt
+  async verifyJwt(token: string): Promise<{ exp: string }> {
+    try {
+      const { exp } = await this.jwtService.verifyAsync(token);
+      return { exp };
+    } catch (err) {
+      throw new HttpException('this invalid token', HttpStatus.UNAUTHORIZED);
+    }
   }
 }
